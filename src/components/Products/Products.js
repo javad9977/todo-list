@@ -1,4 +1,4 @@
-import React , {useState , useEffect} from 'react'
+import React , {useState , useEffect , useCallback} from 'react'
 
 import ProductForm from './ProductForm'
 import ProductList from './ProductList'
@@ -7,7 +7,7 @@ import Search from './Search'
 function Products() {
   const [products , setProduct] = useState([])
   useEffect(()=>{
-    fetch('https://hamintory-91002-default-rtdb.firebaseio.com/products.json')
+    fetch('https://todo-list-83e6e-default-rtdb.firebaseio.com/products.json')
     .then((response)=>{
     return response.json()
   }).then((responseData)=>{
@@ -27,7 +27,7 @@ function Products() {
 
   
   const addProductHandler=(item)=>{
-    fetch('https://hamintory-91002-default-rtdb.firebaseio.com/products.json',{
+    fetch('https://todo-list-83e6e-default-rtdb.firebaseio.com/products.json',{
       method:'POST',
       body:JSON.stringify(item),
       headers:{'Content-Type':'application/json'}
@@ -47,9 +47,9 @@ function Products() {
     })
    
   }
-  const onAddproduct=(items)=>{
+  const onAddproduct=useCallback((items)=>{
     setProduct(items)
-  }
+  },[])
   return (
     <div className="App">
       <ProductForm onaddedproduct={addProductHandler} />
